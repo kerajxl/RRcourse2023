@@ -1,0 +1,55 @@
+Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 5.15.0-1030-gcp x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Apr 13 17:25:53 UTC 2023
+
+  System load:  0.04296875        Processes:             108
+  Usage of /:   19.5% of 9.51GB   Users logged in:       1
+  Memory usage: 26%               IPv4 address for ens4: 10.128.0.2
+  Swap usage:   0%
+
+
+ * Introducing Expanded Security Maintenance for Applications.
+   Receive updates to over 25,000 software packages with your
+   Ubuntu Pro subscription. Free for personal use.
+
+     https://ubuntu.com/gcp/pro
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Thu Apr 13 17:22:08 2023 from 35.235.240.1
+j_leski@instance-1:~$ vim test.txt
+j_leski@instance-1:~$ cat vim
+cat: vim: No such file or directory
+j_leski@instance-1:~$ cat tes.txt
+cat: tes.txt: No such file or directory
+j_leski@instance-1:~$ cat test.txt
+value
+value2
+
+dasd
+
+
+:w
+j_leski@instance-1:~$ uname -a
+Linux instance-1 5.15.0-1030-gcp #37-Ubuntu SMP Tue Feb 14 19:37:08 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
+j_leski@instance-1:~$ touch test.tx
+j_leski@instance-1:~$ touch test.txt
+j_leski@instance-1:~$ ls -l
+total 8
+-rw-rw-r-- 1 j_leski j_leski  0 Apr 13 17:29 test.tx
+-rw-rw-r-- 1 j_leski j_leski 24 Apr 13 17:29 test.txt
+-rw------- 1 j_leski j_leski 16 Apr 13 17:28 test.txt.save
+j_leski@instance-1:~$ 
