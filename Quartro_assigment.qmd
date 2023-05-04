@@ -1,0 +1,22 @@
+---
+title: "Quartro Ranczo"
+author: "Jaroslaw Leski"
+date: "4/05/2023"
+format: html
+execute:
+  echo: false
+---
+
+```{r}
+#| label = "setup",
+#| include = FALSE
+
+```
+
+------------------------------------------------------------------------
+
+## 1) Brief description of the show
+
+***Ranczo*** \["Ranch"\] is a Polish television comedy series, directed by *Wojciech* *Adamczyk*, that originally aired from March 25, 2006 to November 27, 2016 on *TVP1*. It follows the story of *Lucy Wilska*, a Polish-American who has inherited her grandmother's country home in the fictional small village of *Wilkowyje*. She arrives in *Wilkowyje* with intent to sell the cottage but, after seeing the charm of the village, decides to stay.
+
+## 
