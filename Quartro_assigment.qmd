@@ -19,4 +19,9 @@ execute:
 
 ***Ranczo*** \["Ranch"\] is a Polish television comedy series, directed by *Wojciech* *Adamczyk*, that originally aired from March 25, 2006 to November 27, 2016 on *TVP1*. It follows the story of *Lucy Wilska*, a Polish-American who has inherited her grandmother's country home in the fictional small village of *Wilkowyje*. She arrives in *Wilkowyje* with intent to sell the cottage but, after seeing the charm of the village, decides to stay.
 
-## 
+## 2) Photo with the Ranch's shot from 
+
+```{r}
+knitr::include_graphics("https://ocdn.eu/images/pulscms/NDk7MDA_/773f2f5dcaf20da4dfa23ed63aaacbe1.jpg")
+```
+
