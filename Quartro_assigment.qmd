@@ -74,14 +74,21 @@ ggplotly(plot)
 
 ```{r}
 viewership_changes <- diff(table_long$viewers)
-data5 <- data.frame(episode = table_long$season_episode[-1], 
+data5 <- data.frame(episode = table_long$season_episode[-1],
+                    viewers = table_long$viewers[-1],
                    change = viewership_changes)
-data5
-ggplot(data = data5, aes(x = episode, y = change) )+
+p5<- ggplot(data = data5, aes(x = episode, y = change) )+
   geom_bar(stat = "identity")+
   labs(x = "Episode", y = "Change in viewership", 
        title = "Episode-to-episode changes in viewership")+ 
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplotly(p5)
+
 ```
+## A short description of the observed changes that includes inline references to numbers 
+
+The biggest change in viewership can be seen in the beginning of season 3.  
+This is when the increase in viewership was **`r data5[26,]$change`**.  
+However, this may be due to an error in the data because the last episode of season 2 recorded a viewership of **`r data5[25,]$viewers`** which was **`r data5[25,]$change`** lower than the previous episode 12 of this season amounted to **`r data5[24,]$viewers`**.
 
 
