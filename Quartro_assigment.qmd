@@ -5,6 +5,8 @@ date: "4/05/2023"
 format: html
 execute:
   echo: false
+  warning: false
+  messsage: false
 ---
 
 ```{r}
@@ -14,6 +16,8 @@ library(rvest)
 library(xml2)
 library(tidyverse)
 library(psych)
+library(plotly)
+options(scipen = 99)
 ```
 
 ------------------------------------------------------------------------
@@ -36,7 +40,34 @@ table <- html %>% html_nodes("table") %>% .[[14]] %>% html_table(fill = TRUE)
 knitr::kable(table[,c(1:11)], "html", caption = "Ranch viewership per season and episode ")
 
 ```
+## 4) A graph of the viewership over time.
+```{r}
+#/ warning = FALSE
+table_long <- table[,c(1:11)] %>% 
+  dplyr::rename(`01` = `1st season[1]`,
+                `02` = `2nd season[2]`,
+                `03` = `3rd season[3]`,
+                `04` = `4th season[4]`,
+                `05` = `5th season`,
+                `06` = `6th season`,
+                `07` = `7th season`,
+                `08` = `8th season`,
+                `09` = `9th season`,
+                `10` = `10th season`) %>% 
+  pivot_longer(cols = c("01", "02", "03", "04", "05" ,"06", "07",   
+"08","09" ,"10"), names_to = "season", values_to = "viewers") %>% 
+  mutate(viewers = as.numeric(gsub(" ", "", viewers))) %>% 
+  arrange(season) %>% 
+  filter(Episode != 'Average viewing', !is.na(viewers)) %>% 
+  mutate(season_episode = paste0( season,'_s_',Episode,"_e'")) %>%   select(season_episode, viewers)
 
+```
 
+```{r}
+plot <- ggplot(data = table_long, aes(x = season_episode, y = viewers)) +
+  geom_point()+ 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplotly(plot)
+```
 
 
