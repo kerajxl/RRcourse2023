@@ -10,7 +10,10 @@ execute:
 ```{r}
 #| label = "setup",
 #| include = FALSE
-
+library(rvest)
+library(xml2)
+library(tidyverse)
+library(psych)
 ```
 
 ------------------------------------------------------------------------
@@ -24,4 +27,16 @@ execute:
 ```{r}
 knitr::include_graphics("https://ocdn.eu/images/pulscms/NDk7MDA_/773f2f5dcaf20da4dfa23ed63aaacbe1.jpg")
 ```
+## A summary of some basic statistics
+
+```{r}
+url <- "https://en.wikipedia.org/wiki/Ranczo_(TV_series)"
+html <- read_html(url)
+table <- html %>% html_nodes("table") %>% .[[14]] %>% html_table(fill = TRUE)
+knitr::kable(table[,c(1:11)], "html", caption = "Ranch viewership per season and episode ")
+
+```
+
+
+
 
