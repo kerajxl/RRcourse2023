@@ -1,0 +1,108 @@
+---
+title: "Quarto Ranczo"
+author: "Jaroslaw Leski"
+date: today
+format: 
+  html: 
+    toc: true
+    toc-depth: 2 
+    toc-title: Contents
+    smooth-scroll: true
+    number-sections: true
+    theme: lux
+prefer-html: true
+execute:
+  echo: false
+  warning: false
+  messsage: false
+---
+
+```{r}
+#| label = "setup",
+#| include = FALSE
+library(rvest)
+library(xml2)
+library(tidyverse)
+library(psych)
+library(plotly)
+options(scipen = 99)
+```
+
+
+
+***Ranczo*** \["Ranch"\] is a Polish television comedy series, directed by *Wojciech* *Adamczyk*, that originally aired from March 25, 2006 to November 27, 2016 on *TVP1*. It follows the story of *Lucy Wilska*, a Polish-American who has inherited her grandmother's country home in the fictional small village of *Wilkowyje*. She arrives in *Wilkowyje* with intent to sell the cottage but, after seeing the charm of the village, decides to stay.
+
+##  Photo with the Ranch's shot from
+
+```{r}
+knitr::include_graphics("https://ocdn.eu/images/pulscms/NDk7MDA_/773f2f5dcaf20da4dfa23ed63aaacbe1.jpg")
+```
+## Charts
+
+::: panel-tabset
+## A summary of some basic statistics
+
+```{r}
+url <- "https://en.wikipedia.org/wiki/Ranczo_(TV_series)"
+html <- read_html(url)
+table <- html %>% html_nodes("table") %>% .[[14]] %>% html_table(fill = TRUE)
+knitr::kable(table[,c(1:11)], "html", caption = "Ranch viewership per season and episode ")
+
+```
+
+## A graph of the viewership over time.
+
+```{r}
+#/ warning = FALSE
+table_long <- table[,c(1:11)] %>% 
+  dplyr::rename(`01` = `1st season[1]`,
+                `02` = `2nd season[2]`,
+                `03` = `3rd season[3]`,
+                `04` = `4th season[4]`,
+                `05` = `5th season`,
+                `06` = `6th season`,
+                `07` = `7th season`,
+                `08` = `8th season`,
+                `09` = `9th season`,
+                `10` = `10th season`) %>% 
+  pivot_longer(cols = c("01", "02", "03", "04", "05" ,"06", "07",   
+"08","09" ,"10"), names_to = "season", values_to = "viewers") %>% 
+  mutate(viewers = as.numeric(gsub(" ", "", viewers))) %>% 
+  arrange(season) %>% 
+  filter(Episode != 'Average viewing', !is.na(viewers)) %>% 
+  mutate(season_episode = paste0( season,'_s_',Episode,"_e'")) %>%   select(season_episode, viewers)
+
+```
+
+```{r}
+plot <- ggplot(data = table_long, aes(x = season_episode, y = viewers)) +
+  geom_point()+ 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplotly(plot)
+```
+
+## A graph of the episode-to-episode changes in viewership
+
+```{r}
+viewership_changes <- diff(table_long$viewers)
+data5 <- data.frame(episode = table_long$season_episode[-1],
+                    viewers = table_long$viewers[-1],
+                   change = viewership_changes)
+p5<- ggplot(data = data5, aes(x = episode, y = change) )+
+  geom_bar(stat = "identity")+
+  labs(x = "Episode", y = "Change in viewership", 
+       title = "Episode-to-episode changes in viewership")+ 
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+ggplotly(p5)
+
+```
+
+:::
+
+
+## A short description of the observed changes that includes inline references to numbers
+
+The biggest change in viewership can be seen in the beginning of season 3.\
+This is when the increase in viewership was **`r data5[26,]$change`**.\
+However, this may be due to an error in the data because the last episode of season 2 recorded a viewership of **`r data5[25,]$viewers`** which was **`r data5[25,]$change`** lower than the previous episode 12 of this season amounted to **`r data5[24,]$viewers`**.
+
